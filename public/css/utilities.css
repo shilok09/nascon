@@ -1,0 +1,21 @@
+.text-center { text-align: center; }
+.mt-1 { margin-top: 1rem; }
+.d-flex { display: flex; }
+.hidden { display: none; }
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+    .hero { flex-direction: column; text-align: center; }
+    .hero-content { margin-bottom: 3rem; }
+    .cta-buttons { justify-content: center; }
+    .stats { flex-wrap: wrap; gap: 3rem; transform: translateY(0); margin: 0 5%; }
+}
+
+@media (max-width: 768px) {
+    header { flex-direction: column; padding: 1rem; }
+    nav ul { margin-top: 1rem; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .hero { padding: 3rem 5%; }
+    .hero h1 { font-size: 2.2rem; }
+    .stats { padding: 2rem 0; gap: 2rem; }
+    .stat-number { font-size: 2rem; }
+}

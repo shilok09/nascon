@@ -1,0 +1,26 @@
+:root {
+    --primary: #3a86ff;
+    --primary-dark: #2667cc;
+    --secondary: #8338ec;
+    --dark: #1a1a2e;
+    --light: #f8f9fa;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
+    --sky: linear-gradient(to right, #076585, #ffffff);
+    --winter: linear-gradient(to right,#E6DADA,#274046);
+    --manOfSteel : linear-gradient(to right, #780206, #061161);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--winter);
+    background: var(--manOfSteel);
+    position: relative;
+    overflow-x: hidden;
+}
