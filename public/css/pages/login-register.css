@@ -1,7 +1,9 @@
 html, body { height: 100%; }
 body {
   font-family: 'Inter', sans-serif;
-  background: var(manOfSteel);
+  /* background: var(manOfSteel); */
+  background: #000000;
+  background: linear-gradient(160deg, rgba(0, 0, 0, 1) 2%, rgba(121, 9, 9, 1) 59%, rgba(0, 0, 0, 1) 100%);
   min-height: 100vh;
 }
 main{
@@ -60,7 +62,7 @@ background-color:  var(manOfSteel);
   font-optical-sizing: auto;
   font-style: normal;
   line-height: 10vh;
-  color: #fee2e2;
+  color: white;
 }
 
 #nascon h2 {
@@ -68,7 +70,7 @@ background-color:  var(manOfSteel);
 }
 
 #nascon h4 {
-  color: #fee2e2;
+  color: white;
   font-size: 18px;
   text-align: left;
   /* margin-top: 10px; */
@@ -81,6 +83,7 @@ background-color:  var(manOfSteel);
   justify-content: flex-start;
   align-items: flex-start;
   margin-top: 5px;
+  color: white;
 }
 
 #expertise > h3, #expertise > span {

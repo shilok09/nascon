@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NASCON Event Management System - Admin Dashboard</title>
+  <meta name="viewport" content="width=1200">
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <!-- ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+  <link href="\public\admin-dashboard" rel="stylesheet">
+</head>
+<body>
+<div class="flex flex-row min-h-screen w-full" style="background-color: black;">
+  <!-- Sidebar Navigation -->
+  <%- include('partials/dashboard-navbar') %>
+  <div class="ml-64 flex-1 px-8 py-6">
+    <!-- Header -->
+    <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-y-4" >
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-2xl text-blue-600"><i class="fa-solid fa-user-tie"></i></div>
+        <div>
+          <div class="text-lg font-semibold text-gray-100">Hello, Admin</div>
+          <div class="text-gray-300 font-medium text-sm">Manage NASCON with confidence</div>
+        </div>
+      </div>
+      <div class="flex-1 flex items-center justify-end space-x-4">
+        <div class="relative w-64">
+          <i class="fa fa-search text-gray-400 absolute left-3 top-3"></i>
+          <input type="text" placeholder="Search events, users, venues..." class="pl-10 pr-4 py-2 w-full rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm text-sm" />
+        </div>
+        <div class="relative">
+          <select class="appearance-none pl-4 pr-8 py-2 border border-gray-300 rounded-full shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm font-medium">
+            <option>Admin</option>
+            <option>Finance Manager</option>
+            <option>Event Manager</option>
+            <option>Venue Coordinator</option>
+          </select>
+          <span class="absolute right-3 top-3 text-gray-400 pointer-events-none">
+            <i class="fa fa-chevron-down"></i>
+          </span>
+        </div>
+        <div>
+          <button class="bg-gray-200 text-gray-700 hover:bg-blue-50 rounded-full px-3 py-2 text-sm font-medium flex items-center">
+            <i class="fa fa-sign-out-alt mr-2"></i>Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- KPI Strip -->
+    <section class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+      <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center" style="background-color:rgb(34, 33, 33)">
+        <span class="text-xs text-gray-100 font-medium mb-1">Active Events</span>
+        <span class="text-2xl font-bold text-gray-100" id="active-events">23</span>
+        <i class="fa fa-calendar-check text-lg text-blue-500 mt-1"></i>
+      </div>
+      <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center"style="background-color:rgb(34, 33, 33)">
+        <span class="text-xs text-gray-100 font-medium mb-1">Total Registrations</span>
+        <span class="text-2xl font-bold text-gray-100" id="registrations">4,890</span>
+        <i class="fa fa-users text-lg text-green-400 mt-1"></i>
+      </div>
+      <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center"style="background-color:rgb(34, 33, 33)">
+        <span class="text-xs text-gray-100 font-medium mb-1">Sponsorship Revenue</span>
+        <span class="text-2xl font-bold text-gray-100" id="sponsorship-revenue">$123K</span>
+        <i class="fa fa-hand-holding-usd text-lg text-yellow-400 mt-1"></i>
+      </div>
+      <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center"style="background-color:rgb(34, 33, 33)">
+        <span class="text-xs text-gray-100 font-medium mb-1">Accommodation Used</span>
+        <span class="text-2xl font-bold text-gray-100" id="accommodation-used">83%</span>
+        <i class="fa fa-bed text-lg text-purple-400 mt-1"></i>
+      </div>
+      <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center"style="background-color:rgb(34, 33, 33)">
+        <span class="text-xs text-gray-100 font-medium mb-1">Pending Actions</span>
+        <span class="text-2xl font-bold text-gray-100" id="pending-actions">9</span>
+        <i class="fa fa-exclamation-circle text-lg text-red-400 mt-1"></i>
+      </div>
+    </section>
+
+    <!-- Main Dashboard Sections -->
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+
+      <!-- Financial Summary -->
+      <section class="col-span-1 xl:col-span-1 bg-white rounded-xl shadow p-6 mb-8"style="background-color:rgb(34, 33, 33)">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-lg font-semibold text-gray-400 flex items-center">
+            <i class="fa fa-coins text-gray-100 mr-2"></i> Financial Summary
+          </h2>
+          <span class="text-xs text-gray-500 font-medium">This Month</span>
+        </div>
+        <div>
+          <canvas id="financialBarChart" height="200"></canvas>
+        </div>
+        <div class="grid grid-cols-3 gap-2 mt-6">
+          <div class="bg-blue-50 rounded-lg p-3 flex flex-col items-center">
+            <span class="text-xs text-gray-800 mb-1">Registration</span>
+            <span id="finance-registration" class="font-bold text-blue-700 text-lg">$58,900</span>
+          </div>
+          <div class="bg-yellow-50 rounded-lg p-3 flex flex-col items-center">
+            <span class="text-xs text-gray-800 mb-1">Sponsorship</span>
+            <span id="finance-sponsorship" class="font-bold text-yellow-700 text-lg">$51,700</span>
+          </div>
+          <div class="bg-purple-50 rounded-lg p-3 flex flex-col items-center">
+            <span class="text-xs text-gray-800 mb-1">Accommodation</span>
+            <span id="finance-accommodation" class="font-bold text-purple-700 text-lg">$12,400</span>
+          </div>
+        </div>
+        <div class="mt-5">
+          <!-- <div class="flex justify-between text-sm">
+            <span class="text-gray-500">Outstanding Invoices</span>
+            <span class="font-semibold text-red-600" id="outstanding-invoices">$7,200</span>
+          </div> -->
+        </div>
+      </section>
+
+      <!-- Venue Utilization Heatmap -->
+      <section class="col-span-1 xl:col-span-1 bg-white rounded-xl shadow p-6 mb-8"style="background-color:rgb(34, 33, 33)">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-lg font-semibold text-gray-100 flex items-center">
+            <i class="fa fa-landmark text-blue-500 mr-2"></i> Venue Utilization
+          </h2>
+          <span class="text-xs text-gray-500 font-medium">By Date &amp; Location</span>
+        </div>
+        <div id="venueHeatmap" style="height:210px; width:100%;"></div>
+        <div class="mt-4">
+          <div class="flex items-center gap-3 text-sm">
+            <i class="fa fa-flag text-gray-300"></i>
+            <span class="font-medium text-gray-100">3 Conflicts flagged for resolution</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions Toolbar -->
+      <section class="col-span-1 xl:col-span-1 bg-white rounded-xl shadow p-6 mb-8 flex flex-col justify-between"style="background-color:rgb(34, 33, 33)">
+        <div>
+          <h2 class="text-lg font-semibold mb-3 text-gray-100 flex items-center"><i class="fa fa-tools text-green-500 mr-2"></i> Quick Actions</h2>
+          <ul class="space-y-4">
+            <li>
+              <button class="w-full flex items-center bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-3 font-semibold shadow transition focus:outline-none">
+                <i class="fa fa-plus-circle mr-3"></i>Create New Event
+              </button>
+            </li>
+            <li>
+              <button class="w-full flex items-center bg-green-600 hover:bg-green-700 text-white rounded-lg px-4 py-3 font-semibold shadow transition focus:outline-none">
+                <i class="fa fa-building mr-3"></i>Add Venue
+              </button>
+            </li>
+            <li>
+              <button class="w-full flex items-center bg-purple-600 hover:bg-purple-700 text-white rounded-lg px-4 py-3 font-semibold shadow transition focus:outline-none">
+                <i class="fa fa-user-check mr-3"></i>Approve Roles
+              </button>
+            </li>
+            <li>
+              <button class="w-full flex items-center bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg px-4 py-3 font-semibold shadow transition focus:outline-none">
+                <i class="fa fa-mail-bulk mr-3"></i>Notify Stakeholders
+              </button>
+            </li>
+          </ul>
+        </div>
+        <!-- <div class="border-t pt-6 mt-8">
+          <div class="text-xs text-gray-500">Audit Logging active<br> Performance Optimized (Caching, Indexing)</div>
+        </div> -->
+      </section>
+
+    </div>
+    <!-- Footer -->
+    <footer class="flex flex-wrap items-center justify-center mt-8 px-1 py-5 bg-white rounded-xl shadow text-xs text-gray-300"style="background-color:rgb(34, 33, 33)">
+      <!-- <div>
+        <i class="fa-solid fa-database mr-1"></i><span>Schema v1.3.2</span>
+        <span class="ml-4"><i class="fa-solid fa-file-code mr-1"></i><a href="#" target="_blank" class="hover:underline">ERD/SQL Help</a></span>
+      </div>
+      <div class="hidden sm:block">
+        <span class="ml-4"><i class="fa-solid fa-headset mr-1"></i><a href="mailto:support@nascon.org" class="hover:underline" target="_blank">Support</a></span>
+        <span class="ml-4"><i class="fa-solid fa-user-shield mr-1"></i>Secured by DCL</span>
+      </div> --->
+      <div>
+        <span>© 2024 NASCON Event Management System</span>
+      </div>
+    </footer>
+  </div>
+</div>
+<script  src="\js\admin-dashboard.js"></script>
+</body>
+</html>
+

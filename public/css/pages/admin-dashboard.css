@@ -1,0 +1,27 @@
+html, body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #f7fafc;
+    color: #1a202c;
+  }
+  /* Custom Scrollbar for App Container */
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 6px;
+  }
+  /* Dashboard Adjustments for PDF Export */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+    .print-block {
+      display: block !important;
+    }
+    body, html {
+      max-width: none;
+      overflow: visible !important;
+    }
+  }

@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-    res.render('login-register', {
+    res.render('index', {
         title: 'NaSCon - National Solutions Convention',
         stats: {
             attendees: '5k+',
@@ -20,6 +20,25 @@ app.get('/', (req, res) => {
         }
     });
 });
+//In your Express route
+app.get('/login-register', (req, res) => {
+    const mode = req.query.mode || 'login';  // Default to 'login' if no mode is passed
+    res.render('login-register', {
+        title: mode === 'login' ? 'Login' : 'Create Your Account',
+        mode: mode
+    });
+});
+;
+
+//   app.get('/login', (req, res) => {
+//     res.render('login-register',{ title: 'Create Your Account - Modern Registration' },{ mode: 'login' });
+//   });
+  
+//   app.get('/register', (req, res) => {
+//     res.render('login-register', { title: 'Create Your Account - Modern Registration' },{ mode: 'register' });
+//   });
+  
+ 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

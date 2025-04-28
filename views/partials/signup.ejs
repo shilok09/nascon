@@ -1,44 +1,85 @@
 <!-- views/partials/form.ejs -->
-<div class="flex flex-col md:flex-row bg-gray-800 rounded-3xl shadow-2xl md:w-[1000px] w-full max-w-7xl mx-2 overflow-hidden fade-in">
+<div class="flex flex-col md:flex-row bg-gray-800 rounded-3xl shadow-2xl md:w-[1000px] w-full max-w-7xl mx-2 overflow-hidden fade-in" style="background: #000000;
+background: linear-gradient(160deg, rgba(0, 0, 0, 1) 2%, rgba(121, 9, 9, 1) 59%, rgba(0, 0, 0, 1) 100%);" >
     <!-- Form Section -->
-    <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center bg-gray-900 relative z-10">
+    <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center bg-gray-900 relative z-10" style="background: linear-gradient(to right, #7802432c, #061161)">
       <div>
-        <span class="text-sm text-gray-400 tracking-widest font-semibold select-none">START FOR FREE</span>
+        <span class="text-sm text-gray-400 tracking-widest font-semibold select-none">FOR ACCESS</span>
         <h2 class="mt-4 text-6xl font-bold text-white leading-tight tracking-tight">Create your account</h2>
         <p class="mt-2 text-base text-gray-300">
-          Already a member? 
-          <a href="#" class="text-orange-400 font-semibold hover:underline transition underline-offset-2" tabindex="5">Log in</a>
+          <a href="/login-register?mode=login" class="text-orange-400 font-semibold hover:underline transition underline-offset-2" tabindex="3">
+            Already have an account? Log in
+        </a>
+        
         </p>
       </div>
       <form autocomplete="off" class="mt-8 space-y-4" id="regForm" novalidate>
         <div class="flex space-x-3">
           <div class="flex-1">
             <label class="sr-only" for="firstName">First Name</label>
-            <input class="w-full input-transition bg-gray-800 text-white placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
+            <input class="w-full input-transition bg-gray-100 text-black placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
                    type="text" id="firstName" name="firstName" placeholder="First name" autocomplete="given-name" required tabindex="1">
             <span class="text-xs text-red-400 hidden mt-1" id="firstNameError"></span>
           </div>
           <div class="flex-1">
             <label class="sr-only" for="lastName">Last Name</label>
-            <input class="w-full input-transition bg-gray-800 text-white placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
+            <input class="w-full input-transition  bg-gray-100 text-black placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
                    type="text" id="lastName" name="lastName" placeholder="Last name" autocomplete="family-name" required tabindex="2">
             <span class="text-xs text-red-400 hidden mt-1" id="lastNameError"></span>
           </div>
         </div>
         <div>
           <label class="sr-only" for="email">Email</label>
-          <input class="w-full input-transition bg-gray-800 text-white placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
+          <input class="w-full input-transition bg-gray-100 text-black placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
                  type="email" id="email" name="email" placeholder="E-mail" autocomplete="email" required tabindex="3">
           <span class="text-xs text-red-400 hidden mt-1" id="emailError"></span>
         </div>
         <div>
           <label class="sr-only" for="password">Password</label>
-          <input class="w-full input-transition bg-gray-800 text-white placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
+          <input class="w-full input-transition bg-gray-100  text-black placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
                  type="password" id="password" name="password" placeholder="Password" autocomplete="new-password" minlength="6" required tabindex="4">
           <span class="text-xs text-red-400 hidden mt-1" id="passwordError"></span>
         </div>
+        <div>
+          <label class="sr-only" for="phone">Phone Number</label>
+          <input 
+            class="w-full input-transition  bg-gray-100  text-black placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
+            type="tel" 
+            id="phone" 
+            name="phone" 
+            placeholder="Phone Number" 
+            autocomplete="tel" 
+            minlength="10" 
+            maxlength="15" 
+            required 
+            tabindex="4"
+          >
+          <span class="text-xs text-red-400 hidden mt-1" id="phoneError"></span>
+        </div>
+        <div>
+          <label class="sr-only" for="role">User Role</label>
+          <select 
+            class="w-full input-transition  bg-gray-100  text-black placeholder-gray-500 rounded-xl px-4 py-3 font-medium text-base border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
+            id="role" 
+            name="role" 
+            required 
+            tabindex="5"
+          >
+            <option value="" disabled selected>Select your role</option>
+            <option value="participant">Participant</option>
+            <option value="eventOrganizer">Event Organizer</option>
+            <option value="sponsor">Sponsor</option>
+            <option value="judge">Judge</option>
+          </select>
+          <span class="text-xs text-red-400 hidden mt-1" id="roleError"></span>
+        </div>
+                
         <button type="submit"
-        class="w-full py-3 mt-2 bg-white hover:bg-gray-700 transition-colors duration-300 rounded-xl font-semibold text-orange-500 hover:text-white text-base shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+        class="w-full py-3 mt-2 transition-colors text-white rounded-xl font-semibold text-white-500 hover:text-white text-base shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-400" 
+        style="background: linear-gradient(to right, #780227a0, #0c1878c4);
+        transition: background 2s ease, box-shadow 0.5s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
+        border-radius: 10px;" onmouseover="this.style.background='linear-gradient(to right, #8a0330a8, #1727a0c7)'; 
+        this.style.boxShadow='0 6px 18px rgba(0,0,0,0.5)';" onmouseout="this.style.background='linear-gradient(to right, #780227a0, #0c1878c4)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.3)'"
         tabindex="6">
         Create Account
     </button>
@@ -52,4 +93,7 @@
            class="object-cover w-full h-full">
     </div>
   </div>
+  <script src="/js/register.js"></script>
+
+
   
