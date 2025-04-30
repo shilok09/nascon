@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASCON - Sponsor Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="\public\sponsor" rel="stylesheet">
+</head>
+<body>
+    <header class="py-4 bg-gray-900">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="logo">NASCON</a>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="nav-link login-tab active" onclick="showTab('login')">Login</a></li>
+                    <li><a href="#" class="nav-link register-tab" onclick="showTab('register')">Register</a></li>
+                    <li><a href="#" class="nav-link dashboard-tab hidden" onclick="showTab('dashboard')">Dashboard</a>
+                    </li>
+                    <li><a href="#" class="nav-link profile-tab hidden" onclick="showTab('profile')">Profile</a></li>
+                    <li><a href="#" class="nav-link logout-tab hidden" onclick="logout()">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8">
+        <div id="alert-container"></div>
+
+        <!-- Login Tab -->
+        <div id="login" class="tab-content active">
+            <div class="card max-w-md mx-auto">
+                <h2 class="text-2xl font-bold mb-6 text-center">NASCON Sponsorship Portal</h2>
+                <p class="text-center mb-6 text-gray-400">Access your sponsorship dashboard and manage your contribution
+                </p>
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label for="login-email" class="form-label">Business Email</label>
+                        <input type="email" id="login-email" class="form-input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="login-password" class="form-label">Password</label>
+                        <input type="password" id="login-password" class="form-input" required>
+                    </div>
+                    <div class="mb-4 flex items-center">
+                        <input type="checkbox" id="remember-me" class="mr-2 bg-gray-700 border-gray-600">
+                        <label for="remember-me">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full mb-4">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </button>
+                    <div class="text-center mb-4">
+                        <a href="#" class="text-blue-500 hover:underline">Forgot password?</a>
+                    </div>
+                    <div class="text-center">
+                        <p>Don't have an account? <a href="#" class="text-blue-500 hover:underline"
+                                onclick="showTab('register')">Register Now</a></p>
+                    </div>
+                </form>
+                <div class="mt-6 text-center text-xs text-gray-500">
+                    <p>By signing in, you agree to NASCON's Terms of Service and Privacy Policy.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Tab -->
+        <div id="register" class="tab-content">
+            <div class="card max-w-md mx-auto">
+                <h2 class="text-2xl font-bold mb-6 text-center">Sponsor Registration</h2>
+                <p class="text-center mb-6 text-gray-400">Create an account to register as a NASCON sponsor</p>
+                <form id="register-form">
+                    <div class="mb-4">
+                        <label for="company-name" class="form-label">Company Name</label>
+                        <input type="text" id="company-name" class="form-input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="business-email" class="form-label">Business Email</label>
+                        <input type="email" id="business-email" class="form-input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="contact-person" class="form-label">Contact Person</label>
+                        <input type="text" id="contact-person" class="form-input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" id="phone" class="form-input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="register-password" class="form-label">Password</label>
+                        <input type="password" id="register-password" class="form-input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="confirm-password" class="form-label">Confirm Password</label>
+                        <input type="password" id="confirm-password" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full mb-4">
+                        <i class="fas fa-user-plus mr-2"></i> Register
+                    </button>
+                    <div class="text-center">
+                        <p>Already have an account? <a href="#" class="text-blue-500 hover:underline"
+                                onclick="showTab('login')">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content">
+            <h2 class="text-2xl font-bold mb-6">Sponsor Dashboard</h2>
+            <p class="mb-6 text-gray-400">Manage your sponsorships and contributions</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Sponsorship Form -->
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4">Create New Sponsorship</h3>
+                    <form id="sponsorship-form">
+                        <!-- Category Selection -->
+                        <div class="mb-4">
+                            <label class="form-label">Select Sponsorship Category</label>
+                            <input type="hidden" id="selected-category" name="category">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="category-card platinum" onclick="selectCategory('Platinum')">
+                                    <h4 class="font-bold">Platinum</h4>
+                                    <p class="text-sm text-gray-400">Premium visibility and benefits across all events
+                                    </p>
+                                    <p class="font-bold mt-2">$10,000</p>
+                                </div>
+                                <div class="category-card gold" onclick="selectCategory('Gold')">
+                                    <h4 class="font-bold">Gold</h4>
+                                    <p class="text-sm text-gray-400">High visibility and premium benefits for major
+                                        events</p>
+                                    <p class="font-bold mt-2">$7,500</p>
+                                </div>
+                                <div class="category-card silver" onclick="selectCategory('Silver')">
+                                    <h4 class="font-bold">Silver</h4>
+                                    <p class="text-sm text-gray-400">Good visibility and benefits for selected events
+                                    </p>
+                                    <p class="font-bold mt-2">$5,000</p>
+                                </div>
+                                <div class="category-card bronze" onclick="selectCategory('Bronze')">
+                                    <h4 class="font-bold">Bronze</h4>
+                                    <p class="text-sm text-gray-400">Basic visibility and standard benefits</p>
+                                    <p class="font-bold mt-2">$2,500</p>
+                                </div>
+                                <div class="category-card event-specific" onclick="selectCategory('Event Specific')">
+                                    <h4 class="font-bold">Event Specific</h4>
+                                    <p class="text-sm text-gray-400">Targeted sponsorship for individual events</p>
+                                    <p class="font-bold mt-2">$1,000 - $3,000</p>
+                                </div>
+                                <div class="category-card custom" onclick="selectCategory('Custom')">
+                                    <h4 class="font-bold">Custom</h4>
+                                    <p class="text-sm text-gray-400">Tailored sponsorship package to fit your needs</p>
+                                    <p class="font-bold mt-2">Contact Us</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Type Selection -->
+                        <div class="mb-4">
+                            <label class="form-label">Select Sponsorship Type</label>
+                            <input type="hidden" id="selected-type" name="type">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="type-card financial" onclick="selectType('Financial')">
+                                    <h4 class="font-bold">Financial</h4>
+                                    <p class="text-sm text-gray-400">Direct monetary support for NASCON events</p>
+                                </div>
+                                <div class="type-card in-kind" onclick="selectType('In-Kind')">
+                                    <h4 class="font-bold">In-Kind</h4>
+                                    <p class="text-sm text-gray-400">Product or service donations</p>
+                                </div>
+                                <div class="type-card media" onclick="selectType('Media')">
+                                    <h4 class="font-bold">Media</h4>
+                                    <p class="text-sm text-gray-400">Promotion and advertisement support</p>
+                                </div>
+                                <div class="type-card technology" onclick="selectType('Technology')">
+                                    <h4 class="font-bold">Technology</h4>
+                                    <p class="text-sm text-gray-400">Tech-related support and resources</p>
+                                </div>
+                                <div class="type-card venue" onclick="selectType('Venue')">
+                                    <h4 class="font-bold">Venue</h4>
+                                    <p class="text-sm text-gray-400">Providing spaces for events</p>
+                                </div>
+                                <div class="type-card hybrid" onclick="selectType('Hybrid')">
+                                    <h4 class="font-bold">Hybrid</h4>
+                                    <p class="text-sm text-gray-400">Combination of multiple sponsorship types</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sponsorship Details -->
+                        <div class="mb-4">
+                            <label for="sponsorship-amount" class="form-label">Sponsorship Amount ($)</label>
+                            <input type="number" id="sponsorship-amount" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="contract-date" class="form-label">Contract Date</label>
+                            <input type="date" id="contract-date" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="sponsorship-description" class="form-label">Description</label>
+                            <textarea id="sponsorship-description" class="form-input" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">
+                            <i class="fas fa-plus-circle mr-2"></i> Submit Sponsorship
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Current Sponsorships -->
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4">Your Current Sponsorships</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Category</th>
+                                    <th>Type</th>
+                                    <th>Contract Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sponsorships-table-body">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4">
+                                        No sponsorships found. Submit your first sponsorship.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="profile" class="tab-content">
+            <h2 class="text-2xl font-bold mb-6">Sponsor Profile</h2>
+            <p class="mb-6 text-gray-400">Manage your account details and preferences</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Profile Information -->
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4">Company Information</h3>
+                    <form id="profile-form">
+                        <div class="mb-4">
+                            <label for="profile-company-name" class="form-label">Company Name</label>
+                            <input type="text" id="profile-company-name" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="profile-business-email" class="form-label">Business Email</label>
+                            <input type="email" id="profile-business-email" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="profile-contact-person" class="form-label">Contact Person</label>
+                            <input type="text" id="profile-contact-person" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="profile-phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="profile-phone" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="company-website" class="form-label">Company Website</label>
+                            <input type="url" id="company-website" class="form-input">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">
+                            <i class="fas fa-save mr-2"></i> Update Profile
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Change Password -->
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4">Change Password</h3>
+                    <form id="password-form">
+                        <div class="mb-4">
+                            <label for="current-password" class="form-label">Current Password</label>
+                            <input type="password" id="current-password" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="new-password" class="form-label">New Password</label>
+                            <input type="password" id="new-password" class="form-input" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="confirm-new-password" class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirm-new-password" class="form-input" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">
+                            <i class="fas fa-lock mr-2"></i> Change Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-6 bg-gray-900 mt-8">
+        <div class="container mx-auto text-center text-gray-400">
+            <p>© 2023 NASCON. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="\js\sponsor.js"></script>
+</body>
+</html>
