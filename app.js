@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-    res.render('index', {
+    res.render('dashboard', {
         title: 'NaSCon - National Solutions Convention',
         stats: {
             attendees: '5k+',
