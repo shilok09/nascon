@@ -11,7 +11,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
+<<<<<<< HEAD
     res.render('Sponsor', {
+=======
+    res.render('dashboard', {
+>>>>>>> 3d33c27581699035506e93f2f57ecf0b41d7d13c
         title: 'NaSCon - National Solutions Convention',
         stats: {
             attendees: '5k+',
