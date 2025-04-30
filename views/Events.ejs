@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NASCON</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/@fontsgoogle/css?family=Roboto:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="\public\css\pages\events">
+</head>
+<body class="bg-gray-50 antialiased pb-12">
+  <!-- Header & Nav -->
+  <header class="bg-white shadow sticky top-0 z-10 print:hidden">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-university text-blue-700 text-2xl"></i>
+        <span class="text-2xl font-extrabold text-blue-700">NASCON </span>
+      </div>
+      <nav>
+        <ul class="flex space-x-8 text-lg font-medium">
+          <li><button id="nav-events" class="nav-btn border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition-colors">Events</button></li>
+          <li><button id="nav-register" class="nav-btn border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition-colors">Register</button></li>
+          <li><button id="nav-teams" class="nav-btn border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition-colors">Teams & Scores</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 pt-8">
+    <!-- EVENTS PAGE -->
+    <section id="page-events" class="page-section">
+      <h1 class="text-3xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-calendar-alt text-blue-600"></i> Events</h1>
+      <div class="mb-6">
+        <span class="font-semibold mr-2">Filter by Category:</span>
+        <div class="inline-flex rounded-md shadow-sm overflow-x-auto py-2 scrollbar-hide pdf-avoid-scroll">
+          <button class="category-btn px-4 py-2 text-sm font-medium bg-white hover:bg-blue-100 border border-gray-300 focus:outline-none" data-category="All">All</button>
+          <button class="category-btn px-4 py-2 text-sm font-medium bg-white hover:bg-blue-100 border border-gray-300 focus:outline-none" data-category="Technical">Technical</button>
+          <button class="category-btn px-4 py-2 text-sm font-medium bg-white hover:bg-blue-100 border border-gray-300 focus:outline-none" data-category="Cultural">Cultural</button>
+          <button class="category-btn px-4 py-2 text-sm font-medium bg-white hover:bg-blue-100 border border-gray-300 focus:outline-none" data-category="Sports">Sports</button>
+        </div>
+      </div>
+      <div id="events-list" class="grid md:grid-cols-2 gap-6"></div>
+    </section>
+
+    <!-- EVENT DETAIL PAGE -->
+    <section id="page-event-detail" class="page-section hidden">
+      <button id="btn-back-events" class="mb-4 inline-flex items-center text-blue-600 hover:underline"><i class="fas fa-arrow-left mr-1"></i>Back to Events</button>
+      <div class="bg-white rounded-lg shadow px-6 py-6">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+          <h2 id="event-detail-title" class="text-2xl font-bold mb-2"></h2>
+          <div class="flex items-center md:mt-0 mt-2 space-x-2 text-sm">
+            <span class="px-2 py-1 bg-blue-100 rounded-full text-blue-600 font-semibold" id="event-detail-category"></span>
+            <span class="px-2 py-1 bg-gray-100 rounded-full" id="event-detail-type"></span>
+          </div>
+        </div>
+        <div class="mt-4 text-gray-700" id="event-detail-description"></div>
+        <div class="mt-4">
+          <h3 class="font-semibold text-lg mb-1">Rules</h3>
+          <ul class="list-disc list-inside space-y-1 text-gray-700" id="event-detail-rules"></ul>
+        </div>
+        <div class="mt-4 flex flex-col md:flex-row md:space-x-8 space-y-2 md:space-y-0">
+          <div>
+            <h3 class="font-semibold">Schedule:</h3>
+            <span class="bg-blue-50 text-blue-700 rounded px-2 py-1 inline-block mt-1" id="event-detail-schedule"></span>
+          </div>
+          <div>
+            <h3 class="font-semibold">Fee:</h3>
+            <span class="bg-green-50 text-green-700 rounded px-2 py-1 inline-block mt-1" id="event-detail-fee"></span>
+          </div>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <button id="event-register-btn" class="bg-blue-600 text-white py-2 px-5 rounded hover:bg-blue-700 transition-colors font-semibold shadow"><i class="fas fa-edit mr-1"></i> Register</button>
+          <button id="event-detail-viewteams-btn" class="bg-gray-200 text-gray-700 py-2 px-4 rounded hover:bg-gray-300 font-semibold shadow"><i class="fas fa-users mr-1"></i>View Teams</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTRATION PAGE -->
+    <section id="page-register" class="page-section hidden">
+      <h1 class="text-3xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-user-plus text-blue-600"></i> Registration</h1>
+      <form id="registration-form" class="bg-white rounded-lg shadow px-6 py-6 space-y-4 max-w-xl mx-auto">
+        <div>
+          <label for="reg-event" class="block font-semibold mb-1">Select Event</label>
+          <select id="reg-event" name="event" class="w-full mt-1 border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required></select>
+        </div>
+        <div>
+          <label for="reg-type" class="block font-semibold mb-1">Participation Type</label>
+          <select id="reg-type" name="type" class="w-full mt-1 border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+            <option value="Individual">Individual</option>
+            <option value="Team">Team</option>
+          </select>
+        </div>
+        <div id="individual-fields">
+          <label for="reg-individual-name" class="block font-semibold mb-1">Participant Name</label>
+          <input type="text" id="reg-individual-name" name="individualName" class="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+        </div>
+        <div id="team-fields" class="hidden">
+          <label for="reg-team-name" class="block font-semibold mb-1">Team Name</label>
+          <input type="text" id="reg-team-name" name="teamName" class="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-100">
+          <label class="block font-semibold mt-3 mb-1">Team Members <span class="text-gray-500 text-xs">(One per line)</span></label>
+          <textarea id="reg-team-members" name="teamMembers" rows="3" class="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-100"></textarea>
+        </div>
+        <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition-colors font-semibold shadow flex items-center gap-2"><i class="fas fa-paper-plane"></i> Submit Registration</button>
+        <div id="reg-success" class="hidden mt-3 text-green-600 flex items-center gap-2"><i class="fas fa-check-circle"></i> Registered successfully!</div>
+      </form>
+    </section>
+
+    <!-- TEAMS & SCORES PAGE -->
+    <section id="page-teams" class="page-section hidden">
+      <h1 class="text-3xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-medal text-blue-600"></i> Teams & Scores</h1>
+      <div class="mb-5">
+        <label for="score-event-select" class="font-semibold mr-2">Event:</label>
+        <select id="score-event-select" class="border px-3 py-1 rounded focus:ring-2 focus:ring-blue-200">
+          <option value="All">All Events</option>
+        </select>
+      </div>
+      <div class="overflow-x-auto pdf-avoid-scroll">
+        <table id="teams-table" class="min-w-full bg-white rounded-lg shadow text-sm">
+          <thead>
+            <tr class="bg-blue-100 text-blue-700">
+              <th class="py-3 px-4 text-left">#</th>
+              <th class="py-3 px-4 text-left">Team / Individual</th>
+              <th class="py-3 px-4 text-left">Event</th>
+              <th class="py-3 px-4 text-left">Members</th>
+              <th class="py-3 px-4 text-left">Score</th>
+            </tr>
+          </thead>
+          <tbody id="teams-table-body">
+            <!-- Entries injected by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center py-8 mt-10 text-gray-400 text-xs">
+    &copy; 2024 University Event Management. All Rights Reserved.
+  </footer>
+
+  <!-- Modal for Registration from Event Details -->
+  <div id="modal-reg" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-auto p-6 relative">
+      <button class="absolute top-2 right-3 text-gray-500 hover:text-red-500 text-xl focus:outline-none" onclick="closeRegModal()"><i class="fas fa-times"></i></button>
+      <h2 class="text-xl font-bold mb-3">Register</h2>
+      <form id="modal-reg-form" class="space-y-3">
+        <div>
+          <label class="font-semibold mb-1 block">Participation Type</label>
+          <select id="modal-reg-type" class="w-full mt-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-200" required>
+            <option value="Individual">Individual</option>
+            <option value="Team">Team</option>
+          </select>
+        </div>
+        <div id="modal-individual-fields">
+          <label class="font-semibold mb-1 block">Participant Name</label>
+          <input type="text" id="modal-indiv-name" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+        </div>
+        <div id="modal-team-fields" class="hidden">
+          <label class="font-semibold mb-1 block">Team Name</label>
+          <input type="text" id="modal-team-name" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-100">
+          <label class="block font-semibold mt-2 mb-1">Team Members <span class="text-gray-500 text-xs">(One per line)</span></label>
+          <textarea id="modal-team-members" rows="2" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-100"></textarea>
+        </div>
+        <input type="hidden" id="modal-event-id">
+        <button type="submit" class="bg-blue-600 text-white py-2 px-5 rounded hover:bg-blue-700 transition-colors font-semibold shadow w-full">Register</button>
+        <div id="modal-reg-success" class="hidden mt-2 text-green-600 flex items-center gap-2 justify-center"><i class="fas fa-check-circle"></i>Registered!</div>
+      </form>
+    </div>
+  </div>
+<script src="\js\events.js"></script>
+</body>
+</html>
+

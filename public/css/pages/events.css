@@ -1,0 +1,32 @@
+ body {
+     font-family: 'Roboto', Arial, sans-serif;
+     background-color: black;
+     color: #1a202c;
+ }
+
+ .active-nav {
+     @apply border-b-2 border-blue-600 text-blue-600 font-semibold bg-blue-50;
+ }
+
+ .category-btn-active {
+     @apply bg-blue-600 text-white;
+ }
+
+ .scrollbar-hide::-webkit-scrollbar {
+     display: none;
+ }
+
+ .scrollbar-hide {
+     -ms-overflow-style: none;
+     scrollbar-width: none;
+ }
+
+ /* Custom style for consistent PDF export: avoid overflow-y:scroll on containers */
+ .pdf-avoid-scroll {
+     overflow: visible !important;
+ }
+
+ /* Responsive fix for table cell wrap in PDF export */
+ table {
+     word-break: break-word;
+ }
