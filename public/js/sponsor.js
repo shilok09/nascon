@@ -1,5 +1,26 @@
+const registerTab = document.getElementById("registerBtn");
+// Get the footer element
+const footer = document.getElementById("footer1");
 
-        // Simulated database to store registered users and sponsorships
+// Event listener for "Register" tab click
+registerTab.addEventListener("click", function() {
+    // Change the margin-top of the footer when "Register" is clicked
+    footer.style.marginTop = "10px";  // You can adjust this value as needed
+});
+window.onload = function () {
+    showTab('dashboard'); // This will open the Dashboard tab by default
+  };
+        
+        // document.querySelector('.dashboard-tab').classList.remove('hidden');
+        // document.querySelector('.profile-tab').classList.remove('hidden');
+        // document.querySelector('.logout-tab').classList.remove('hidden');
+        // document.getElementById('profile-company-name').value = user.companyName;
+        // document.getElementById('profile-business-email').value = user.email;
+        // document.getElementById('profile-contact-person').value = user.contactPerson;
+        // document.getElementById('profile-phone').value = user.phone;
+        // document.getElementById('company-website').value = user.website || '';
+         //Simulated database to store registered users and sponsorships
+
         let users = [];
         let currentUser = null;
         let sponsorships = [];
@@ -12,8 +33,8 @@
         // DOM elements
         document.addEventListener('DOMContentLoaded', function () {
             // Form event listeners
-            document.getElementById('login-form').addEventListener('submit', handleLogin);
-            document.getElementById('register-form').addEventListener('submit', handleRegister);
+            // document.getElementById('login-form').addEventListener('submit', handleLogin);
+            // document.getElementById('register-form').addEventListener('submit', handleRegister);
             document.getElementById('sponsorship-form').addEventListener('submit', handleSponsorshipSubmit);
             document.getElementById('profile-form').addEventListener('submit', handleProfileUpdate);
             document.getElementById('password-form').addEventListener('submit', handlePasswordChange);
@@ -40,8 +61,9 @@
             // Add active class to the clicked link
             document.querySelector(`.${tabId}-tab`).classList.add('active');
         }
+       
 
-        // Login handler
+        // // Login handler
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
@@ -55,9 +77,6 @@
                 showAlertMessage('Login successful! Welcome back ' + user.companyName, 'success');
 
                 // Show dashboard and profile tabs
-                document.querySelector('.dashboard-tab').classList.remove('hidden');
-                document.querySelector('.profile-tab').classList.remove('hidden');
-                document.querySelector('.logout-tab').classList.remove('hidden');
 
                 // Hide login and register tabs
                 document.querySelector('.login-tab').classList.add('hidden');
@@ -81,47 +100,48 @@
         }
 
         // Register handler
-        function handleRegister(e) {
-            e.preventDefault();
-            const companyName = document.getElementById('company-name').value;
-            const email = document.getElementById('business-email').value;
-            const contactPerson = document.getElementById('contact-person').value;
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
 
-            // Validate fields
-            if (password !== confirmPassword) {
-                showAlertMessage('Passwords do not match!', 'error');
-                return;
-            }
+        // function handleRegister(e) {
+        //     e.preventDefault();
+        //     const companyName = document.getElementById('company-name').value;
+        //     const email = document.getElementById('business-email').value;
+        //     const contactPerson = document.getElementById('contact-person').value;
+        //     const phone = document.getElementById('phone').value;
+        //     const password = document.getElementById('register-password').value;
+        //     const confirmPassword = document.getElementById('confirm-password').value;
 
-            // Check if email is already registered
-            if (users.some(user => user.email === email)) {
-                showAlertMessage('This email is already registered. Please login instead.', 'error');
-                return;
-            }
+        //     // Validate fields
+        //     if (password !== confirmPassword) {
+        //         showAlertMessage('Passwords do not match!', 'error');
+        //         return;
+        //     }
 
-            // Create new user
-            const newUser = {
-                id: users.length + 1,
-                companyName,
-                email,
-                contactPerson,
-                phone,
-                password,
-                website: ''
-            };
+        //     // Check if email is already registered
+        //     if (users.some(user => user.email === email)) {
+        //         showAlertMessage('This email is already registered. Please login instead.', 'error');
+        //         return;
+        //     }
 
-            // Add to users array
-            users.push(newUser);
+        //     // Create new user
+        //     const newUser = {
+        //         id: users.length + 1,
+        //         companyName,
+        //         email,
+        //         contactPerson,
+        //         phone,
+        //         password,
+        //         website: ''
+        //     };
 
-            showAlertMessage('Registration successful! Please login with your credentials.', 'success');
+        //     // Add to users array
+        //     users.push(newUser);
 
-            // Clear form and switch to login tab
-            document.getElementById('register-form').reset();
-            showTab('login');
-        }
+        //     showAlertMessage('Registration successful! Please login with your credentials.', 'success');
+
+        //     // Clear form and switch to login tab
+        //     document.getElementById('register-form').reset();
+        //     //MOVE TO SPONSOR PAGE //sponsor.ejs
+        // }
 
         // Sponsorship submission handler
         function handleSponsorshipSubmit(e) {

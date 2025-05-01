@@ -8,7 +8,11 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 
 .card {
     background-color: #1e1e1e;
