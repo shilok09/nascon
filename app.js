@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Routes
 app.get('/', (req, res) => {
-    res.render('index', {
+    res.render('sponsor', {
         title: 'NaSCon - National Solutions Convention',
     });
 });

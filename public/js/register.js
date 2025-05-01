@@ -113,8 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
       
       try {
         const formData = {
-          firstName: firstNameInput.value,
-          lastName: lastNameInput.value,
+          name: `${firstNameInput.value} ${lastNameInput.value}`,
           companyName: document.getElementById('companyName').value,
           email: document.getElementById('email').value,
           password: document.getElementById('password').value,
@@ -135,9 +134,10 @@ document.addEventListener('DOMContentLoaded', function () {
           if (formData.role === 'sponsor') {
             // Handle sponsor redirection
             window.location.href = '/sponsor';
-          } else {
-            window.location.href = '/dashboard';
-          }
+          } 
+          // else {
+          //   window.location.href = '/dashboard';
+          // }
         } else {
           // Show server errors
           if (result.errors) {
