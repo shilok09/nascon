@@ -8,7 +8,11 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 
 .card {
     background-color: #1e1e1e;
@@ -228,4 +232,3 @@ tr:hover {
     border: 2px solid #4f46e5 !important;
     background-color: #2d2d2d;
 }
-

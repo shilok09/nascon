@@ -1,48 +1,61 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
+
+
+// Route imports
+const authRoutes = require('./routes/authRoutes');
+const sponsorRoutes = require('./routes/sponsorRoutes');
+// const sponsorRoutes = require('./routes/sponsorRoutes');
+
+// Database connection
+require('./db/connection');
+
 const app = express();
 
-// Set up EJS as view engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-// Serve static files
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// View engine setup
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Routes
 app.get('/', (req, res) => {
-<<<<<<< HEAD
-    res.render('dashboard', {
-=======
-    res.render('Sponsor', {
->>>>>>> c9bf72c (Events html css and js file for events and sponsor)
+    res.render('sponsor', {
         title: 'NaSCon - National Solutions Convention',
-        stats: {
-            attendees: '5k+',
-            speakers: '50+',
-            sessions: '100+'
-        }
     });
 });
-//In your Express route
+// app.get('/sponsor', (req, res) => {
+//     res.render('sponsor', {
+//         title: 'Sponsor-NASCON',
+//     });
+// });
+
 app.get('/login-register', (req, res) => {
-    const mode = req.query.mode || 'login';  // Default to 'login' if no mode is passed
+    const mode = req.query.mode || 'login';
     res.render('login-register', {
         title: mode === 'login' ? 'Login' : 'Create Your Account',
         mode: mode
     });
 });
-;
 
-//   app.get('/login', (req, res) => {
-//     res.render('login-register',{ title: 'Create Your Account - Modern Registration' },{ mode: 'login' });
-//   });
-  
-//   app.get('/register', (req, res) => {
-//     res.render('login-register', { title: 'Create Your Account - Modern Registration' },{ mode: 'register' });
-//   });
-  
- 
+// API Routes
+app.use(express.static('public'));
+app.use('/auth', authRoutes);
+app.use('/sponsor', sponsorRoutes);
+
+// Error handling middleware (add this)
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).render('error', { 
+        title: 'Error',
+        message: 'Something went wrong!' 
+    });
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
