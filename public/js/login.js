@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // Get redirect parameter from URL if present
+  const urlParams = new URLSearchParams(window.location.search);
+  const redirectTarget = urlParams.get('redirect');
+
   const loginForm = document.getElementById('loginForm');
   const fields = [
       {
@@ -76,8 +80,12 @@ document.addEventListener('DOMContentLoaded', function () {
                       localStorage.setItem('user', JSON.stringify(result.user));
                   }
                   
-                  // Redirect based on user type
-                  window.location.href = result.redirect || '/dashboard';
+                  // For simplicity, always use the server-provided redirect
+                  // This ensures admin users always go to the dashboard
+                  let redirectUrl = result.redirect || '/dashboard';
+                  
+                  // Redirect to the determined URL
+                  window.location.href = redirectUrl;
               } else {
                   // Show specific field error if available
                   if (result.field) {

@@ -131,13 +131,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (response.ok) {
           console.log("Registration successful:", result);
-          if (formData.role === 'sponsor') {
-            // Handle sponsor redirection
+          // Redirect based on the redirect URL provided from the server
+          // or fall back to role-based redirects
+          if (result.redirect) {
+            window.location.href = result.redirect;
+          } else if (formData.role === 'sponsor') {
             window.location.href = '/sponsor';
-          } 
-          // else {
-          //   window.location.href = '/dashboard';
-          // }
+          } else if (formData.role === 'participant') {
+            window.location.href = '/events';
+          } else {
+            window.location.href = '/';
+          }
         } else {
           // Show server errors
           if (result.errors) {

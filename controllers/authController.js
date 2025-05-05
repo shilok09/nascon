@@ -4,7 +4,22 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // 1. Find user by email
+        // Hard-coded admin check (as specified by the user)
+        if (email === 'admin@gmail.com' && password === '12345678') {
+            return res.json({
+                message: 'Login successful',
+                user: {
+                    id: 1,
+                    name: 'admin',
+                    email: 'admin@gmail.com',
+                    phone: '03001234567',
+                    userType: 'admin'
+                },
+                redirect: '/dashboard'
+            });
+        }
+
+        // Regular user login flow for non-admin users
         const [users] = await pool.query(
             'SELECT * FROM users WHERE email = ?', 
             [email]
@@ -30,15 +45,20 @@ exports.login = async (req, res) => {
         // 3. Successful login - return user data (excluding password)
         const { password: _, ...userData } = user;
         
+        // Define redirect URLs based on user type
+        let redirectUrl = '/';
+        if (user.userType === 'admin') {
+            redirectUrl = '/dashboard';
+        } else if (user.userType === 'sponsor') {
+            redirectUrl = '/sponsor';
+        } else if (user.userType === 'participant') {
+            redirectUrl = '/events'; // This will match the route in eventRoutes.js
+        }
+        
         res.json({
             message: 'Login successful',
             user: userData,
-            redirect: user.userType === 'sponsor' 
-            ? '/sponsor' 
-            : user.userType === 'participant' 
-              ? '/events' 
-              : '/'
-          
+            redirect: redirectUrl
         });
 
     } catch (error) {
@@ -69,11 +89,20 @@ exports.register = async (req, res) => {
                 [companyName, phone, userResult.insertId]
             );
         }
-
+        
+        // Define redirect URL based on role (not user, since it doesn't exist here)
+        let redirectUrl = '/';
+        if (role === 'sponsor') {
+            redirectUrl = '/sponsor';
+        } else if (role === 'participant') {
+            redirectUrl = '/events';
+        }
+        
         res.status(201).json({
             message: 'Registration successful',
             userId: userResult.insertId,
-            role: role
+            role: role,
+            redirect: redirectUrl
         });
 
     } catch (error) {

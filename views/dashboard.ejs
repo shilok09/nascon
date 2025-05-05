@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=1200">
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <!-- Chart.js - updated version -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
   <!-- ECharts -->
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
   <!-- Font Awesome -->
@@ -15,7 +15,15 @@
   <!-- Google Fonts: Inter -->
   <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
   <link href="/css/pages/admin-dashboard.css" rel="stylesheet">
- 
+  <style>
+    /* Additional styles to ensure KPI displays properly */
+    .kpi-value {
+      min-height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
 <div class="flex flex-row min-h-screen w-full" style="background-color: black;">
@@ -58,28 +66,28 @@
     <!-- KPI Strip -->
     <section class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
       <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center" style="background-color:rgb(34, 33, 33)">
-        <span class="text-xs text-gray-100 font-medium mb-1">Active Events</span>
-        <span class="text-2xl font-bold text-gray-100" id="active-events">23</span>
+        <span class="text-xs text-gray-100 font-medium mb-1">Total Events</span>
+        <span class="text-2xl font-bold text-gray-100 kpi-value" id="active-events">0</span>
         <i class="fa fa-calendar-check text-lg text-blue-500 mt-1"></i>
       </div>
       <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center"style="background-color:rgb(34, 33, 33)">
         <span class="text-xs text-gray-100 font-medium mb-1">Total Registrations</span>
-        <span class="text-2xl font-bold text-gray-100" id="registrations">4,890</span>
+        <span class="text-2xl font-bold text-gray-100 kpi-value" id="registrations">0</span>
         <i class="fa fa-users text-lg text-green-400 mt-1"></i>
       </div>
       <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center"style="background-color:rgb(34, 33, 33)">
         <span class="text-xs text-gray-100 font-medium mb-1">Sponsorship Revenue</span>
-        <span class="text-2xl font-bold text-gray-100" id="sponsorship-revenue">$123K</span>
+        <span class="text-2xl font-bold text-gray-100 kpi-value" id="sponsorship-revenue">$0</span>
         <i class="fa fa-hand-holding-usd text-lg text-yellow-400 mt-1"></i>
       </div>
       <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center"style="background-color:rgb(34, 33, 33)">
-        <span class="text-xs text-gray-100 font-medium mb-1">Accommodation Used</span>
-        <span class="text-2xl font-bold text-gray-100" id="accommodation-used">83%</span>
+        <span class="text-xs text-gray-100 font-medium mb-1">Accommodation Requests</span>
+        <span class="text-2xl font-bold text-gray-100 kpi-value" id="accommodation-used">0</span>
         <i class="fa fa-bed text-lg text-purple-400 mt-1"></i>
       </div>
       <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center"style="background-color:rgb(34, 33, 33)">
-        <span class="text-xs text-gray-100 font-medium mb-1">Pending Actions</span>
-        <span class="text-2xl font-bold text-gray-100" id="pending-actions">9</span>
+        <span class="text-xs text-gray-100 font-medium mb-1">Actions Pending</span>
+        <span class="text-2xl font-bold text-gray-100 kpi-value" id="pending-actions">0</span>
         <i class="fa fa-exclamation-circle text-lg text-red-400 mt-1"></i>
       </div>
     </section>
@@ -101,15 +109,15 @@
         <div class="grid grid-cols-3 gap-2 mt-6">
           <div class="bg-blue-50 rounded-lg p-3 flex flex-col items-center">
             <span class="text-xs text-gray-800 mb-1">Registration</span>
-            <span id="finance-registration" class="font-bold text-blue-700 text-lg">$58,900</span>
+            <span id="finance-registration" class="font-bold text-blue-700 text-lg kpi-value">$0</span>
           </div>
           <div class="bg-yellow-50 rounded-lg p-3 flex flex-col items-center">
             <span class="text-xs text-gray-800 mb-1">Sponsorship</span>
-            <span id="finance-sponsorship" class="font-bold text-yellow-700 text-lg">$51,700</span>
+            <span id="finance-sponsorship" class="font-bold text-yellow-700 text-lg kpi-value">$0</span>
           </div>
           <div class="bg-purple-50 rounded-lg p-3 flex flex-col items-center">
             <span class="text-xs text-gray-800 mb-1">Accommodation</span>
-            <span id="finance-accommodation" class="font-bold text-purple-700 text-lg">$12,400</span>
+            <span id="finance-accommodation" class="font-bold text-purple-700 text-lg kpi-value">$0</span>
           </div>
         </div>
         <div class="mt-5">
@@ -130,22 +138,20 @@
       background-color:rgb(34, 33, 33);">
         <h3 class="text-xl font-bold mb-4">Nascon Current Sponsorships</h3>
         <div class="overflow-x-auto">
-            <table style="height: 407px;">
+            <table class="min-w-full divide-y divide-gray-700">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Contract Date</th>
-                        <th>Amount</th>
-                        <!-- <th>Status</th>
-                        <th>Actions</th> -->
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Category</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Contract Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Amount</th>
                     </tr>
                 </thead>
-                <tbody id="sponsorships-table-body">
+                <tbody id="sponsorships-table-body" class="bg-gray-800 divide-y divide-gray-700">
                     <tr>
-                        <td colspan="7" class="text-center py-4">
-                            No sponsorships found.
+                        <td colspan="5" class="text-center py-4 text-gray-400">
+                            Loading sponsorships...
                         </td>
                     </tr>
                 </tbody>

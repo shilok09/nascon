@@ -51,16 +51,27 @@ exports.getAllEvents = async (req, res) => {
 
 // Register for an event
 exports.registerForEvent = async (req, res) => {
-    const { userId, eventId, teamSize, specialRequirements, needsAccommodation } = req.body;
+    const { userId, eventId, teamSize, specialRequirements, needsAccommodation, accommodation } = req.body;
+    
+    if (!userId || !eventId) {
+        return res.status(400).json({ error: 'Missing required fields: userId and eventId' });
+    }
+    
+    // Start transaction for database consistency
+    let connection;
     
     try {
+        connection = await db.getConnection();
+        await connection.beginTransaction();
+        
         // Check if user is already registered
-        const [existing] = await db.query(
+        const [existing] = await connection.query(
             'SELECT * FROM registrations WHERE user_id = ? AND event_id = ?',
             [userId, eventId]
         );
         
         if (existing.length > 0) {
+            await connection.release();
             return res.status(400).json({ error: 'You are already registered for this event' });
         }
         
@@ -68,19 +79,64 @@ exports.registerForEvent = async (req, res) => {
         const registrationCode = `NAS-${Math.floor(100000 + Math.random() * 900000)}`;
         
         // Create registration
-        await db.query(
+        const [registrationResult] = await connection.query(
             'INSERT INTO registrations (user_id, event_id, team_size, special_requirements, needs_accommodation, registration_code) VALUES (?, ?, ?, ?, ?, ?)',
             [userId, eventId, teamSize, specialRequirements, needsAccommodation, registrationCode]
         );
         
-        res.json({ 
+        let accommodationRequestId = null;
+        
+        // If accommodation is needed, create accommodation request
+        if (needsAccommodation && accommodation) {
+            // Default accommodation ID (assuming there's a default accommodation option)
+            // In a real app, you'd have logic to select an appropriate accommodation based on availability
+            const defaultAccommodationId = 1;
+            
+            // Create accommodation request record
+            const [accommodationResult] = await connection.query(
+                'INSERT INTO accommodationrequest (reqDate, noOfPeople, userID) VALUES (?, ?, ?)',
+                [
+                    accommodation.reqDate || new Date().toISOString().split('T')[0], // Today's date if not provided
+                    accommodation.noOfPeople || teamSize, // Use team size if not specified
+                    userId
+                ]
+            );
+            
+            accommodationRequestId = accommodationResult.insertId;
+        }
+        
+        // Commit the transaction
+        await connection.commit();
+        connection.release();
+        
+        // Create response object
+        const response = { 
             success: true,
             registrationCode,
-            message: 'Registration successful' 
-        });
+            registrationId: registrationResult.insertId,
+            message: 'Registration successful'
+        };
+        
+        // Add accommodation details to response if applicable
+        if (accommodationRequestId) {
+            response.accommodationRequestId = accommodationRequestId;
+            response.accommodationMessage = 'Accommodation request has been processed';
+        }
+        
+        res.json(response);
+        
     } catch (error) {
+        // Rollback transaction if error occurs
+        if (connection) {
+            await connection.rollback();
+            connection.release();
+        }
+        
         console.error('Error registering for event:', error);
-        res.status(500).json({ error: 'Failed to register for event' });
+        res.status(500).json({ 
+            error: 'Failed to register for event',
+            details: error.message
+        });
     }
 };
 

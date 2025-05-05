@@ -265,9 +265,20 @@
                 <p class="text-purple-200 text-lg mb-6">
                     Your registration has been received. We'll be in touch shortly with more details.
                 </p>
-                <p class="text-white mb-6">
-                    Registration ID: <span id="registrationId" class="font-mono font-bold"></span>
-                </p>
+                <div id="registration-details" class="bg-purple-800 p-4 rounded-lg mb-6 text-left">
+                    <p class="text-white">
+                        <strong>Registration ID:</strong> <span id="registrationId" class="font-mono font-bold"></span>
+                    </p>
+                    <div id="accommodation-info" class="mt-3 pt-3 border-t border-purple-600 hidden">
+                        <p class="text-white">
+                            <i class="fas fa-bed mr-2"></i>
+                            <strong>Accommodation Requested</strong>
+                        </p>
+                        <p class="text-purple-200 text-sm mt-1">
+                            Accommodation details will be sent to your email
+                        </p>
+                    </div>
+                </div>
                 <button onclick="closeConfirmationModal()" class="bg-white text-purple-700 px-8 py-3 rounded-lg font-semibold">
                     Done
                 </button>
