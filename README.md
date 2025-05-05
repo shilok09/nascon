@@ -152,6 +152,7 @@ The application uses several interconnected tables:
 ## Contributors
 
 - [Shilok Kumar](https://github.com/shilok09)
+- [Ali Asjad](https://github.com/Asjad-Naqvi)
 
 ## License
 
