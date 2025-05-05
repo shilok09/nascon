@@ -1,395 +1,336 @@
-
-    // Static Event Data (for demonstration)
-    const eventsData = [
-      {
-        id: 'e1',
-        name: 'Hackathon',
-        category: 'Technical',
-        type: 'Team',
-        description: 'A 24-hour code sprint where teams compete to build innovative solutions. Themes will be announced at the start.',
-        rules: [
-          'Team size: 3-5 members',
-          'Original work only; plagiarism leads to disqualification',
-          'Follow the code of conduct at all times',
-          'Submission must include code + presentation slides',
-        ],
-        schedule: '17th March, 10:00 AM - 18th March, 10:00 AM',
-        fee: '₹150 per team',
-      },
-      {
-        id: 'e2',
-        name: 'Robotics Challenge',
-        category: 'Technical',
-        type: 'Team',
-        description: 'Showcase your robotics skills! Build and race your custom robot on our obstacle course.',
-        rules: [
-          'Team size: up to 4',
-          'You can only use permitted kits',
-          'All robots must pass initial inspection',
-        ],
-        schedule: '18th March, 2:00 PM - 6:00 PM',
-        fee: '₹200 per team',
-      },
-      {
-        id: 'e3',
-        name: 'Solo Dance',
-        category: 'Cultural',
-        type: 'Individual',
-        description: 'Express yourself with rhythm and moves. Solo participants perform for up to 4 minutes.',
-        rules: [
-          'Performance limit: 4 minutes',
-          'No explicit/derogatory content',
-          'Props allowed with prior approval',
-        ],
-        schedule: '19th March, 11:00 AM',
-        fee: '₹50 per participant',
-      },
-      {
-        id: 'e4',
-        name: 'Battle of Bands',
-        category: 'Cultural',
-        type: 'Team',
-        description: 'Bands face off on the big stage. Bring your original music or play classic covers.',
-        rules: [
-          'Band size: 3-7',
-          '10-minute setup + 12-minute performance',
-          'No pyrotechnics',
-        ],
-        schedule: '19th March, 6:00 PM',
-        fee: '₹300 per band',
-      },
-      {
-        id: 'e5',
-        name: 'Cricket Tournament',
-        category: 'Sports',
-        type: 'Team',
-        description: 'Get your squad on the field! Knockout 8-team cricket tournament.',
-        rules: [
-          'Team size: up to 11 + 2 substitutes',
-          '20 overs per side',
-          'Standard cricket rules apply',
-        ],
-        schedule: '20th-21st March, 8:00 AM onwards',
-        fee: '₹800 per team',
-      },
-      {
-        id: 'e6',
-        name: 'Table Tennis Singles',
-        category: 'Sports',
-        type: 'Individual',
-        description: 'Face off in a knockout style singles tournament.',
-        rules: [
-          'Individual event',
-          'Best of 3 sets, final best of 5',
-          'Bring your own paddle',
-        ],
-        schedule: '20th March, 10:00 AM',
-        fee: '₹40 per person',
-      },
-      {
-        id: 'e7',
-        name: 'Photography Contest',
-        category: 'Cultural',
-        type: 'Individual',
-        description: 'Submit up to 3 original photographs on the theme "Dreams". Winners judged on creativity and technique.',
-        rules: [
-          'Photos must be original, no plagiarism',
-          'Theme: "Dreams"',
-          'Max 3 entries per participant',
-        ],
-        schedule: 'Submission Deadline: 17th March, 11:59 PM',
-        fee: '₹30 per entry',
-      }
-    ];
-
-    // Registration and Teams Data (simulate database with localStorage)
-    function getRegisteredTeams() {
-      return JSON.parse(localStorage.getItem('uniEventReg') || '[]');
+function getSampleEvents() {
+    return [
+        // Sample event data
+    {
+        id: 1,
+        title: "Tech Startup Hackathon",
+        description: "24-hour hackathon to build innovative solutions for real-world problems. Form teams, ideate, and pitch your startup idea to win investment opportunities.",
+        date: "April 21-22, 2023",
+        time: "3:00 PM",
+        location: "CS Block, FAST University",
+        category: "Competition",
+        categoryColor: "bg-purple-800",
+        bgColor: "bg-indigo-900",
+        featured: true,
+        buttonText: "Register Now"
+    },
+    {
+        id: 2,
+        title: "AI & Machine Learning Workshop",
+        description: "Hands-on workshop covering the fundamentals of AI and ML with Python. No prior experience required.",
+        date: "April 20, 2023",
+        time: "10:00 AM",
+        location: "Lab 5, CS Block",
+        category: "Workshop",
+        categoryColor: "bg-blue-800",
+        bgColor: "bg-blue-900",
+        featured: false,
+        buttonText: "Register Now"
+    },
+    {
+        id: 3,
+        title: "Blockchain Revolution Talk",
+        description: "Industry experts discuss the future of blockchain technology and its real-world applications.",
+        date: "April 22, 2023",
+        time: "2:00 PM",
+        location: "Auditorium",
+        category: "Talk",
+        categoryColor: "bg-green-800",
+        bgColor: "bg-green-900",
+        featured: false,
+        buttonText: "Register Now"
+    },
+    {
+        id: 4,
+        title: "Tech Networking Mixer",
+        description: "An evening of networking with tech professionals and peers. Food and drinks provided.",
+        date: "April 21, 2023",
+        time: "7:00 PM",
+        location: "University Courtyard",
+        category: "Social",
+        categoryColor: "bg-yellow-800",
+        bgColor: "bg-yellow-900",
+        featured: false,
+        buttonText: "Register Now"
+    },
+    {
+        id: 5,
+        title: "Cybersecurity Capture The Flag",
+        description: "Test your cybersecurity skills in this exciting competition. Individual and team categories available.",
+        date: "April 23, 2023",
+        time: "9:00 AM",
+        location: "Lab 3, CS Block",
+        category: "Competition",
+        categoryColor: "bg-purple-800",
+        bgColor: "bg-indigo-900",
+        featured: false,
+        buttonText: "Register Now"
+    },
+    {
+        id: 6,
+        title: "Cloud Computing Workshop",
+        description: "Learn to deploy applications using AWS and Azure. Bring your own laptop for hands-on practice.",
+        date: "April 19, 2023",
+        time: "11:00 AM",
+        location: "Lab 2, CS Block",
+        category: "Workshop",
+        categoryColor: "bg-blue-800",
+        bgColor: "bg-blue-900",
+        featured: false,
+        buttonText: "Register Now"
     }
-    function saveRegisteredTeams(teams) {
-      localStorage.setItem('uniEventReg', JSON.stringify(teams));
-    }
+];
+}
+document.addEventListener('DOMContentLoaded', function() {
+  // Modal functions - Ensure these are declared first
+  function openModal() {
+      registrationModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+  }
 
-    // Navigation logic
-    function changePage(page) {
-      document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden'));
-      document.getElementById(page).classList.remove('hidden');
-      document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.remove('active-nav'));
-      if(page==='page-events'){ document.getElementById('nav-events').classList.add('active-nav');}
-      if(page==='page-register'){ document.getElementById('nav-register').classList.add('active-nav'); }
-      if(page==='page-teams'){ document.getElementById('nav-teams').classList.add('active-nav'); }
-    }
+  function closeModal(){
+      registrationModal.classList.add('hidden');
+      document.body.style.overflow = '';
+  }
 
-    // EVENTS PAGE RENDERING
-    function renderEvents(category='All') {
-      const container = document.getElementById('events-list');
-      container.innerHTML = '';
-      let filtered = eventsData.filter(ev=>category==='All' || ev.category===category);
-      for(let ev of filtered){
-        let card = document.createElement('div');
-        card.className = "bg-white rounded-lg shadow px-5 py-4 flex flex-col justify-between h-full";
-        card.innerHTML = `
-          <div>
-            <h3 class="text-xl font-bold text-blue-700 mb-1">${ev.name}</h3>
-            <span class="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded mr-2">${ev.category}</span>
-            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">${ev.type}</span>
-            <p class="mt-2 text-gray-700">${ev.description.slice(0,100)}${ev.description.length>100?'...':''}</p>
-          </div>
-          <div class="mt-3 flex space-x-2">
-            <button class="see-detail-btn bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition-colors shadow" data-id="${ev.id}"><i class="fas fa-eye mr-1"></i>Details</button>
-            <button class="register-btn bg-gray-200 text-gray-700 px-3 py-2 rounded hover:bg-gray-300" data-id="${ev.id}"><i class="fas fa-user-plus mr-1"></i> Register</button>
-          </div>
+  function openConfirmationModal() {
+      confirmationModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+  }
+
+  function closeConfirmationModal() {
+      confirmationModal.classList.add('hidden');
+      document.body.style.overflow = '';
+  }
+
+
+
+
+  // DOM elements
+  const eventsGrid = document.querySelector('.grid');
+  const categoryButtons = document.querySelectorAll('section.mb-12 button');
+  const registerButtons = document.querySelectorAll('.register-btn');
+  const registrationModal = document.getElementById('registrationModal');
+  const closeModalButton = document.getElementsByClassName('closeRegistration')[0];  // Select the close button by class
+  const confirmationModal = document.getElementById('confirmationModal');
+  const eventTitleElement = document.getElementById('eventTitle');
+  const registrationForm = document.getElementById('registrationForm');
+  const registrationIdElement = document.getElementById('registrationId');
+
+  //updatingggggg
+  const currentEventIdElement = document.createElement('input');
+  currentEventIdElement.type = 'hidden';
+  currentEventIdElement.id = 'currentEventId';
+  registrationForm.appendChild(currentEventIdElement);
+
+  // Current filter state
+  let currentFilter = 'all';
+
+  // Initialize the page
+  function init() {
+      renderEvents(events);
+      setupEventListeners();
+  }
+  async function fetchEvents() {
+    try {
+        const response = await fetch('/events');
+        if (!response.ok) throw new Error('Failed to fetch events');
+        events = await response.json();
+        renderEvents(events);
+    } catch (error) {
+        console.error('Error:', error);
+        // Fallback to sample data if API fails
+        // events = getSampleEvents();
+        // renderEvents(events);
+    }
+}
+
+  // Render events to the grid
+  function renderEvents(eventsToRender) {
+    eventsGrid.innerHTML = '';
+    
+    eventsToRender.forEach(event => {
+        if (currentFilter !== 'all' && event.category.toLowerCase() !== currentFilter) return;
+        
+        const eventCard = document.createElement('div');
+        eventCard.className = 'event-card rounded-xl overflow-hidden shadow-lg bg-gray-800';
+        eventCard.innerHTML = `
+            <div class="h-48 ${event.bg_color} relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                <div class="absolute bottom-0 left-0 p-4">
+                    <span class="text-white text-xs font-bold px-3 py-1 rounded-full ${event.category_color}">${event.category}</span>
+                    <h3 class="text-xl font-bold text-white mt-2">${event.title}</h3>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center text-gray-400 text-sm mb-4">
+                    <div class="mr-4">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>${event.date}</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>${event.time}</span>
+                    </div>
+                </div>
+                <div class="text-gray-400 text-sm mb-4">
+                    <i class="fas fa-map-marker-alt mr-2"></i>
+                    <span>${event.location}</span>
+                </div>
+                <p class="text-gray-300 mb-6">${event.description}</p>
+                <button class="register-btn btn-primary w-full py-3 rounded-lg text-white font-semibold" 
+                        data-event="${event.title}" 
+                        data-event-id="${event.id}">
+                    Register Now
+                </button>
+            </div>
         `;
-        container.appendChild(card);
-      }
-      // Attach event handlers
-      container.querySelectorAll('.see-detail-btn').forEach(btn=>{
-        btn.onclick = (e)=>showEventDetail(btn.dataset.id);
-      });
-      container.querySelectorAll('.register-btn').forEach(btn=>{
-        btn.onclick = (e)=>showRegModal(btn.dataset.id);
-      });
-    }
-
-    function showEventDetail(eventId) {
-      // Load event data
-      let event = eventsData.find(ev=>ev.id===eventId);
-      if(!event){ return; }
-      document.getElementById('event-detail-title').innerText = event.name;
-      document.getElementById('event-detail-category').innerText = event.category;
-      document.getElementById('event-detail-type').innerText = event.type;
-      document.getElementById('event-detail-description').innerText = event.description;
-      let rulesUl = document.getElementById('event-detail-rules');
-      rulesUl.innerHTML = '';
-      for(let rule of event.rules){
-        let li = document.createElement('li');
-        li.innerText = rule;
-        rulesUl.appendChild(li);
-      }
-      document.getElementById('event-detail-schedule').innerText = event.schedule;
-      document.getElementById('event-detail-fee').innerText = event.fee;
-      document.getElementById('event-register-btn').onclick = ()=>showRegModal(event.id);
-      document.getElementById('event-detail-viewteams-btn').onclick = () => {
-        // set select to current event & show teams page
-        document.getElementById('score-event-select').value = event.id;
-        renderTeamsTable();
-        changePage('page-teams');
-      }
-      changePage('page-event-detail');
-      window.scrollTo(0,0);
-    }
-    document.getElementById('btn-back-events').onclick = ()=>changePage('page-events');
-
-    // CATEGORY FILTERING
-    document.querySelectorAll('.category-btn').forEach(btn=>{
-      btn.onclick = function(){
-        document.querySelectorAll('.category-btn').forEach(b=>b.classList.remove('category-btn-active'));
-        this.classList.add('category-btn-active');
-        renderEvents(this.dataset.category);
-      };
+        eventsGrid.appendChild(eventCard);
     });
-    // Set 'All' as active on load
-    document.querySelector('.category-btn[data-category="All"]').classList.add('category-btn-active');
 
-    // NAVIGATION HANDLERS
-    document.getElementById('nav-events').onclick = ()=>{changePage('page-events');renderEvents(document.querySelector('.category-btn-active').dataset.category);}
-    document.getElementById('nav-register').onclick = ()=>{
-      renderRegistrationEvents();
-      changePage('page-register');
-    }
-    document.getElementById('nav-teams').onclick = ()=>{
-      populateScoresEventsList();
-      renderTeamsTable();
-      changePage('page-teams');
-    }
+    // Add event listeners to new register buttons
+    document.querySelectorAll('.register-btn').forEach(button => {
+        button.addEventListener('click', handleRegisterClick);
+    });
+}
 
-    // ON PAGE LOAD
-    window.onload = ()=>{
-      renderEvents('All');
-      renderRegistrationEvents();
-      populateScoresEventsList();
-      renderTeamsTable();
-    };
-
-
-    //--- REGISTER PAGE LOGIC --//
-    function renderRegistrationEvents() {
-      let eventSelect = document.getElementById('reg-event');
-      eventSelect.innerHTML = '';
-      for(let ev of eventsData){
-        let opt = document.createElement('option');
-        opt.value = ev.id;
-        opt.innerText = ev.name + " (" + ev.type + ")";
-        eventSelect.appendChild(opt);
-      }
-      updateRegFormByEvent();
-    }
-
-    // Dynamically show/hide fields
-    document.getElementById('reg-type').onchange = updateRegTypeFields;
-    document.getElementById('reg-event').onchange = updateRegFormByEvent;
-    function updateRegTypeFields(){
-      if(document.getElementById('reg-type').value==="Team") {
-        document.getElementById('team-fields').classList.remove('hidden');
-        document.getElementById('individual-fields').classList.add('hidden');
-        document.getElementById('reg-individual-name').removeAttribute('required');
-        document.getElementById('reg-team-name').setAttribute('required','required');
-      } else {
-        document.getElementById('team-fields').classList.add('hidden');
-        document.getElementById('individual-fields').classList.remove('hidden');
-        document.getElementById('reg-individual-name').setAttribute('required','required');
-        document.getElementById('reg-team-name').removeAttribute('required');
-      }
-    }
-    function updateRegFormByEvent(){
-      let evId = document.getElementById('reg-event').value;
-      let ev = eventsData.find(e=>e.id===evId);
-      document.getElementById('reg-type').value = ev?.type||'Individual';
-      updateRegTypeFields();
-    }
-    // Form Submit
-    document.getElementById('registration-form').onsubmit = function(e){
-      e.preventDefault();
-      let evId = this.event.value;
-      let type = this.type.value;
-      let entry = {
-        eventId: evId,
-        eventName: (eventsData.find(ev=>ev.id===evId)||{}).name,
-        type,
-        score: null,
-      };
-      if(type==='Individual'){
-        entry.name = this.individualName.value.trim();
-        entry.members = '';
-      } else {
-        entry.name = this.teamName.value.trim();
-        entry.members = this.teamMembers.value.trim().split('\n').filter(Boolean).map(m=>m.trim());
-      }
-      // Save
-      let teams = getRegisteredTeams();
-      teams.push(entry);
-      saveRegisteredTeams(teams);
-      this.reset();
-      updateRegTypeFields();
-      document.getElementById('reg-success').classList.remove('hidden');
-      setTimeout(()=>document.getElementById('reg-success').classList.add('hidden'),1800);
-      renderTeamsTable(); // update teams page
-    };
-
-
-    //--- MODAL REGISTRATION --//
-    function showRegModal(eventId){
-      let ev = eventsData.find(e=>e.id===eventId);
-      document.getElementById('modal-event-id').value = ev.id;
-      document.getElementById('modal-reg-type').value = ev.type;
-      updateModalRegFields();
-      document.getElementById('modal-reg').classList.remove('hidden');
-    }
-    function closeRegModal(){
-      document.getElementById('modal-reg-success').classList.add('hidden');
-      document.getElementById('modal-reg').classList.add('hidden');
-      document.getElementById('modal-reg-form').reset();
-      updateModalRegFields();
-    }
-    document.getElementById('modal-reg-type').onchange = updateModalRegFields;
-    function updateModalRegFields(){
-      let type = document.getElementById('modal-reg-type').value;
-      if(type==='Team'){
-        document.getElementById('modal-team-fields').classList.remove('hidden');
-        document.getElementById('modal-individual-fields').classList.add('hidden');
-        document.getElementById('modal-indiv-name').removeAttribute('required');
-        document.getElementById('modal-team-name').setAttribute('required','required');
-      } else {
-        document.getElementById('modal-team-fields').classList.add('hidden');
-        document.getElementById('modal-individual-fields').classList.remove('hidden');
-        document.getElementById('modal-indiv-name').setAttribute('required','required');
-        document.getElementById('modal-team-name').removeAttribute('required');
-      }
-    }
-    // Modal form submit
-    document.getElementById('modal-reg-form').onsubmit = function(e){
-      e.preventDefault();
-      let evId = document.getElementById('modal-event-id').value;
-      let type = document.getElementById('modal-reg-type').value;
-      let entry = {
-        eventId: evId,
-        eventName: (eventsData.find(ev=>ev.id===evId)||{}).name,
-        type,
-        score: null,
-      };
-      if(type==='Individual'){
-        entry.name = document.getElementById('modal-indiv-name').value.trim();
-        entry.members = '';
-      } else {
-        entry.name = document.getElementById('modal-team-name').value.trim();
-        entry.members = document.getElementById('modal-team-members').value.trim().split('\n').filter(Boolean);
-      }
-      let teams = getRegisteredTeams();
-      teams.push(entry);
-      saveRegisteredTeams(teams);
-      document.getElementById('modal-reg-success').classList.remove('hidden');
-      setTimeout(()=>{
-        closeRegModal();
-        renderTeamsTable();
-      },1000);
-    }
-
-    //--- TEAMS AND SCORES PAGE ---//
-    function populateScoresEventsList(){
-      let sel = document.getElementById('score-event-select');
-      sel.innerHTML = '';
-      let optAll = document.createElement('option');
-      optAll.value = 'All';
-      optAll.textContent = "All Events";
-      sel.appendChild(optAll);
-      for(let ev of eventsData){
-        let opt = document.createElement('option');
-        opt.value = ev.id;
-        opt.textContent = ev.name;
-        sel.appendChild(opt);
-      }
-      sel.onchange = renderTeamsTable;
-    }
-
-    function renderTeamsTable(){
-      let tbody = document.getElementById('teams-table-body');
-      tbody.innerHTML = '';
-      let filterEventId = document.getElementById('score-event-select').value || 'All';
-      let teams = getRegisteredTeams().filter(t=>filterEventId==='All'||t.eventId===filterEventId);
-      for (let i=0;i<teams.length;i++){
-        let tr = document.createElement('tr');
-        tr.className = i%2?'bg-gray-50':'';
-        tr.innerHTML = `
-          <td class="py-2 px-4">${i+1}</td>
-          <td class="py-2 px-4 font-semibold">${teams[i].name}</td>
-          <td class="py-2 px-4">${teams[i].eventName}</td>
-          <td class="py-2 px-4">${teams[i].type==='Individual'?teams[i].name:(Array.isArray(teams[i].members)?teams[i].members.join(', ') : teams[i].members || '-')}</td>
-          <td class="py-2 px-4">
-            <span class="score-display">${teams[i].score!==null?teams[i].score:'-'}</span>
-            <button class="ml-2 text-blue-600 hover:underline score-edit-btn" data-idx="${i}" title="Edit Score"><i class="fas fa-pen"></i></button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      }
-      // Score Edit
-      tbody.querySelectorAll('.score-edit-btn').forEach(btn=>{
-        btn.onclick = function(){
-          let idx = btn.dataset.idx;
-          let val = prompt('Enter score:');
-          if(val!==null && val!==''){
-            let regTeams = getRegisteredTeams();
-            regTeams[idx].score=val;
-            saveRegisteredTeams(regTeams);
-            renderTeamsTable();
-          }
+  // Set up event listeners
+  function setupEventListeners() {
+      // Category filter buttons
+      categoryButtons.forEach(button => {
+          button.addEventListener('click', () => {
+              // Update active button styling
+              categoryButtons.forEach(btn => {
+                  btn.classList.remove('bg-purple-800');
+                  btn.classList.add('bg-gray-800');
+              });
+              
+              button.classList.remove('bg-gray-800');
+              button.classList.add('bg-purple-800');
+              
+              // Update filter and re-render
+              currentFilter = button.textContent.toLowerCase();
+              renderEvents(events);
+          });
+          if (closeModalButton) {
+            closeModalButton.addEventListener('click', closeModal);  // Add the event listener to close the modal
         }
       });
-    }
 
-    // Navigation from Event Detail's teams button
-    document.getElementById('score-event-select').onchange = renderTeamsTable;
+      // Register buttons
+      registerButtons.forEach(button => {
+          button.addEventListener('click', handleRegisterClick);
+      });
 
-    // Utility: close modal on background click
-    document.getElementById('modal-reg').onclick = function(e){
-      if(e.target===this) closeRegModal();
+      // Form submission
+      registrationForm.addEventListener('submit', handleFormSubmit);
+  }
+
+  // Handle register button clicks
+  function handleRegisterClick(e) {
+    const eventName = e.currentTarget.getAttribute('data-event');
+    const eventId = e.currentTarget.getAttribute('data-event-id');
+    eventTitleElement.textContent = eventName;
+    currentEventIdElement.value = eventId;
+    openModal();
+}
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    const formData = {
+        eventId: currentEventIdElement.value,
+        fullName: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        university: document.getElementById('university').value,
+        phone: document.getElementById('phone').value,
+        gender: document.querySelector('input[name="gender"]:checked').value,
+        teamSize: document.getElementById('teamSize').value,
+        specialRequirements: document.getElementById('specialRequirements').value,
+        needsAccommodation: document.getElementById('accomodaion').checked
     };
+    
+    try {
+        // In a real app, you would get userId from the session
+        const userId = await getCurrentUserId(); // You need to implement this
+        
+        const response = await fetch('/api/events/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}` // If using JWT
+            },
+            body: JSON.stringify({
+                userId,
+                eventId: formData.eventId,
+                teamSize: formData.teamSize,
+                specialRequirements: formData.specialRequirements,
+                needsAccommodation: formData.needsAccommodation
+            })
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Registration failed');
+        }
+        
+        const data = await response.json();
+        
+        // Show confirmation with real registration ID
+        registrationIdElement.textContent = data.registrationCode;
+        
+        // Close registration modal and show confirmation
+        closeModal();
+        openConfirmationModal();
+        
+        // Reset form
+        registrationForm.reset();
+    } catch (error) {
+        console.error('Registration error:', error);
+        alert(error.message);
+    }
+}
+  // Helper function to get current user ID (implement based on your auth system)
+  async function getCurrentUserId() {
+    // This is a placeholder - implement based on your authentication system
+    // For example, if you're using JWT:
+    // const token = localStorage.getItem('token');
+    // const decoded = jwtDecode(token);
+    // return decoded.userId;
+    
+    // For now, return a dummy value
+    return 1;
+}
+
+  // Fixed modal overlay click handlers
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+          // Only close if clicking directly on the overlay (not a child element)
+          if (e.target === overlay) {
+              if (overlay.parentElement.id === 'registrationModal') {
+                  closeModal();
+              } else if (overlay.parentElement.id === 'confirmationModal') {
+                  closeConfirmationModal();
+              }
+          }
+      });
+  });
+
+  // // Prevent clicks inside modal content from closing the modal
+  document.querySelectorAll('.modal-content').forEach(content => {
+      content.addEventListener('click', function(e) {
+          e.stopPropagation();  // Prevent the click event from reaching the overlay
+      });
+  });
+  const featuredRegisterBtn = document.querySelector('.register-btn-featured');
+  if (featuredRegisterBtn) {
+      featuredRegisterBtn.addEventListener('click', function () {
+          // Optional: Trigger same register flow
+          handleRegisterClick({ currentTarget: featuredRegisterBtn });
+      });
+  }
+  
+
+  // Initialize the page
+  init();
+});
+

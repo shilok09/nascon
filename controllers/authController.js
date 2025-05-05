@@ -33,7 +33,12 @@ exports.login = async (req, res) => {
         res.json({
             message: 'Login successful',
             user: userData,
-            redirect: user.userType === 'sponsor' ? '/sponsor' : '/dashboard'
+            redirect: user.userType === 'sponsor' 
+            ? '/sponsor' 
+            : user.userType === 'participant' 
+              ? '/events' 
+              : '/'
+          
         });
 
     } catch (error) {

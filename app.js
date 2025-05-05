@@ -6,6 +6,7 @@ const path = require('path');
 // Route imports
 const authRoutes = require('./routes/authRoutes');
 const sponsorRoutes = require('./routes/sponsorRoutes');
+const eventRoutes = require('./routes/eventRoutes');
 // const sponsorRoutes = require('./routes/sponsorRoutes');
 
 // Database connection
@@ -24,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Routes
 app.get('/', (req, res) => {
-    res.render('sponsor', {
+    res.render('index', {
         title: 'NaSCon - National Solutions Convention',
     });
 });
@@ -46,6 +47,7 @@ app.get('/login-register', (req, res) => {
 app.use(express.static('public'));
 app.use('/auth', authRoutes);
 app.use('/sponsor', sponsorRoutes);
+app.use('/events', eventRoutes);
 
 // Error handling middleware (add this)
 app.use((err, req, res, next) => {
