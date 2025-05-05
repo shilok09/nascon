@@ -14,9 +14,34 @@ exports.getEventsPage = (req, res) => {
 };
 
 // Get all events
+// Get all events
 exports.getAllEvents = async (req, res) => {
     try {
-        const [events] = await db.query('SELECT * FROM events');
+        const [events] = await db.query(`
+            SELECT 
+                id,
+                title,
+                description,
+                date,
+                time,
+                location,
+                category,
+                CASE 
+                    WHEN category = 'Competition' THEN 'bg-purple-800'
+                    WHEN category = 'Workshop' THEN 'bg-blue-800'
+                    WHEN category = 'Talk' THEN 'bg-green-800'
+                    WHEN category = 'Social' THEN 'bg-yellow-800'
+                END AS category_color,
+                CASE 
+                    WHEN category = 'Competition' THEN 'bg-indigo-900'
+                    WHEN category = 'Workshop' THEN 'bg-blue-900'
+                    WHEN category = 'Talk' THEN 'bg-green-900'
+                    WHEN category = 'Social' THEN 'bg-yellow-900'
+                END AS bgColor,
+                is_featured AS featured,
+                'Register Now' AS buttonText
+            FROM events
+        `);
         res.json(events);
     } catch (error) {
         console.error('Error fetching events:', error);

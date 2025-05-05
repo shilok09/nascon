@@ -5,10 +5,11 @@ const eventController = require('../controllers/eventController');
 
 // Public routes
 router.get('/', eventController.getEventsPage);
-router.get('/', eventController.getAllEvents);
+router.get('/events', eventController.getAllEvents);
+router.post('/register', eventController.registerForEvent);
 
 // Protected routes (require authentication)
-// router.post('/register', eventController.registerForEvent);
+
 // router.get('/my-registrations/:userId', ensureAuthenticated, eventController.getUserRegistrations);
 
 module.exports = router;

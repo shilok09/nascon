@@ -126,22 +126,28 @@ document.addEventListener('DOMContentLoaded', function() {
   // Current filter state
   let currentFilter = 'all';
 
-  // Initialize the page
-  function init() {
-      renderEvents(events);
-      setupEventListeners();
-  }
-  async function fetchEvents() {
+// Add this at the top with other variable declarations
+let events = [];
+
+// Update the init function
+function init() {
+    fetchEvents(); // Only call fetchEvents here
+    setupEventListeners();
+}
+
+// Update fetchEvents function
+async function fetchEvents() {
     try {
-        const response = await fetch('/events');
+        const response = await fetch('/events'); // Make sure this matches your route
         if (!response.ok) throw new Error('Failed to fetch events');
-        events = await response.json();
-        renderEvents(events);
+        const data = await response.json();
+        events = data; // Store the fetched events
+        renderEvents(events); // Render the events
     } catch (error) {
         console.error('Error:', error);
         // Fallback to sample data if API fails
-        // events = getSampleEvents();
-        // renderEvents(events);
+        events = getSampleEvents();
+        renderEvents(events);
     }
 }
 
@@ -155,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const eventCard = document.createElement('div');
         eventCard.className = 'event-card rounded-xl overflow-hidden shadow-lg bg-gray-800';
         eventCard.innerHTML = `
-            <div class="h-48 ${event.bg_color} relative overflow-hidden">
+            <div class="h-48 ${event.bgColor} relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
                 <div class="absolute bottom-0 left-0 p-4">
                     <span class="text-white text-xs font-bold px-3 py-1 rounded-full ${event.category_color}">${event.category}</span>
@@ -253,7 +259,7 @@ async function handleFormSubmit(e) {
         // In a real app, you would get userId from the session
         const userId = await getCurrentUserId(); // You need to implement this
         
-        const response = await fetch('/api/events/register', {
+        const response = await fetch('/events/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -332,5 +338,6 @@ async function handleFormSubmit(e) {
 
   // Initialize the page
   init();
+  
 });
 
